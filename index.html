@@ -90,4 +90,92 @@ function showlist() {
 	console.log('>>>> origin trains', originTrains);
 	var destTrains = find_trains(dest);
 	console.log('>>>> dest trains', destTrains);
+	
+
+	var filteredTrain = getCommonTrains(originTrains.trains, destTrains.trains);
+
+	console.log('>>>> filtered trains', filteredTrain);
+
+	for (var i in filteredTrain) {
+		htmlText += '<p class="p-name"> Train Code: ' + filteredTrain[i].Traincode + '</p>';
+        htmlText += '<p class="p-loc"> Train Date: ' + filteredTrain[i].Traindate + '</p>';
+        htmlText += '<p class="p-type"> Scheduled Arrival: ' + filteredTrain[i].Scharrival+ '</p>';
+        htmlText += '<br/>';
+       
+        
+
+	
+		
+        
+	}
+
+	document.getElementById("trainList").innerHTML = htmlText;
+
+}
+
+function getCommonTrains(x, y) {
+	let result = new Set();
+	
+	x = x.map((train) => {
+		
+				
+		return JSON.stringify({
+			Traincode: train.Traincode,
+			Traindate: train.Traindate,
+			Origintime: train.Origintime,
+			Traintype: train.Traintype,
+		    Scharrival: train.Scharrival,
+		   
+		   
+		  
+		    
+			
+	
+			
+			
+			
+			
+		
+			
+		
+		
+			
+		});
+	});
+	
+					
+	y = y.map((train) => {
+		return JSON.stringify({
+			Traincode: train.Traincode,
+			Traindate: train.Traindate,
+			Origintime: train.Origintime,
+	        Traintype: train.Traintype,
+	        Scharrival: train.Scharrival,
+	       
+		  
+	       
+		
+			
+		});
+	});
+
+				
+	console.log(x, y);
+
+	x.forEach((train) => {
+		if (y.indexOf(train) >= 0) {
+			result.add(train);
+		}
+	});
+	
+					
+
+	return Array.from(result).map((train) => JSON.parse(train));
+}
+
+</script>
+
+</body>
+
+</html>
 
