@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<!--
+Irih rail website using irish rail api
+group 10
+
+-->
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	 crossorigin="anonymous">
+	<style>
+		.bodybg {
+			background: url("http://kclr96fm.com/media/2016/10/irishrail.jpg");
+		}
+	</style>
+
+</head>
+
+<body class="bodybg">
+	<br/>
+	<br/>
+	<center>
+		<h1 style="color: white;">Irish Railway</h1>
+	</center>
+	<br/>
+	<br/>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<input class="form-control" name="station" id="origin" placeholder="Source Station" required/>
+			</div>
+			<div class="col-md-6">
+				<input class="form-control" id="dest" placeholder="Destination Station" required/>
+			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12">
+				<button class="form-control" onclick="showlist()">Show Trains</button>
+			</div>
+
+			<div class="col-md-12">
+				<div id="trainList">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	//var trains;
+
+
+function find_trains(station) {
+	var vars = "station=" + station;
+	var result = "";
+	$.ajax({
+		url: "serverside.php",
+		type: "GET",
+		data: vars,
+		async: false,
+		success: function (data) {
+			result = data;
+		}
+	});
+	//console.log(result);
+	return JSON.parse(result);
+}
+
+function showlist() {
+
+	var origin = document.getElementById("origin").value;
+	var dest = document.getElementById("dest").value;
+	var htmlText = "";
+
+	/*if(origin == null || dest == null) {
+		alert("Please Fill up the fields properly");
+		
+	}*/
+
+	document.getElementById("trainList").innerHTML = "processing...";
+
+	var originTrains = find_trains(origin);
+	console.log('>>>> origin trains', originTrains);
+	var destTrains = find_trains(dest);
+	console.log('>>>> dest trains', destTrains);
+
